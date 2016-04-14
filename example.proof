@@ -4,10 +4,10 @@ Require Import ProofWeb.
 
 Variables A B C : Prop.
 
-Theorem prop_031 : (A /\ (B /\ ~C)) -> ~~A -> (B -> ~~~C).
+Theorem convuluted : (A /\ ((A -> B) /\ (B -> ~C))) -> ~~A -> (B -> ~~~C).
 Proof.
 (* should be translated to *)
-(* premise: ~(A /\ (B /\ C)) *)
+(* premise: (A /\ (B /\ C)) *)
 (* premise: A *)
 (* premise: B *)
 (* goal   : ~C *)
