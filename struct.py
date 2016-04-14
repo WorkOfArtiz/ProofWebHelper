@@ -18,6 +18,19 @@ class Var:
     def __repr__(self):
         return "Var (%s)" % self.var
 
+# code to make sure every variable with the same name points to the exact same
+# object
+variables = dict()
+def Variable(variable_name):
+    if variable_name in variables.keys():
+        return variables.get(variable_name)
+    variable = Var(variable_name)
+    variables[variable_name] = variable
+    return variable
+
+def get_variables():
+    return variables.values()
+
 class Not:
     t = '~'
     def __init__(self, expr):
@@ -30,8 +43,8 @@ class Not:
 
     def to_pw(self):
         if self.expr.t in ('~','var'):
-            return "(~%s)" % self.expr.to_pw()
-        return "(~(%s))" % self.expr.to_pw()
+            return "~%s" % self.expr.to_pw()
+        return "~(%s)" % self.expr.to_pw()
 
     def to_label(self):
         return "%sN" % self.expr.to_label()
@@ -82,7 +95,7 @@ class Implies:
         self.rhs = rhs
 
     def to_label(self):
-        return "%s%si" % (self.lhs.to_label(),self.rhs.to_label())
+        return "%s%sI" % (self.lhs.to_label(),self.rhs.to_label())
 
     def to_pw(self):
         return "(%s -> %s)" % (self.lhs.to_pw(), self.rhs.to_pw())

@@ -18,6 +18,7 @@ import re
 from struct import Var, Not, And, Or, Implies
 
 def parse(string):
+
     # removing whitespace
     string = re.sub(r'\s+', '', string)
     statement, i = parse_statement(string)
@@ -85,7 +86,6 @@ if __name__ == '__main__':
     for test in tests:
         try:
             exp = parse(test)
-            # print(repr(exp))
-            print(str(exp))
+            print("'%s' should be the same as '%s'" % (test, exp.to_pw()))
         except:
             print("Test '%s' was not well formed" % test)
